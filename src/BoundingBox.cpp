@@ -18,7 +18,7 @@ using namespace mrcpp;
 
 template<int D>
 BoundingBox<D>::BoundingBox(int n, const int *l, const int *nb)
-        : cornerIndex(n, l) {
+        : periodic(false), cornerIndex(n, l) {
     setNBoxes(nb);
     setDerivedParameters();
 }
@@ -34,6 +34,13 @@ template<int D>
 BoundingBox<D>::BoundingBox(const BoundingBox<D> &box)
         : cornerIndex(box.cornerIndex) {
     setNBoxes(box.nBoxes);
+    setDerivedParameters();
+}
+
+template<int D>
+BoundingBox<D>::BoundingBox(bool pbc)
+        : periodic(pbc), cornerIndex() {
+    setNBoxes(0);
     setDerivedParameters();
 }
 
@@ -127,9 +134,13 @@ NodeIndex<D> BoundingBox<D>::getNodeIndex(int bIdx) const {
     return nIdx;
 }
 
+
 // Specialized for D=1 below
 template<int D>
 int BoundingBox<D>::getBoxIndex(const double *r) const {
+
+    if (this->isPeriodic()) return 0;
+
     assert(r != 0);
     int idx[D];
     for (int d = 0; d < D; d++) {
@@ -252,4 +263,3 @@ int BoundingBox<1>::getBoxIndex(const NodeIndex<1> &nIdx) const {
 template class BoundingBox<1>;
 template class BoundingBox<2>;
 template class BoundingBox<3>;
-
