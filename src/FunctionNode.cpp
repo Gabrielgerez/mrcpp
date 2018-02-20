@@ -26,6 +26,9 @@ double FunctionNode<D>::evalf(const double *r) {
     if (r[0] > 1.0 and periodic) rtmp[0] = fmod(r[0],1.0);
     if (r[1] > 1.0 and periodic) rtmp[1] = fmod(r[1],1.0);
     if (r[2] > 1.0 and periodic) rtmp[2] = fmod(r[2],1.0);
+    if (r[0] < 0.0 and periodic) rtmp[0] = fmod(r[0],1.0) +1;
+    if (r[1] < 0.0 and periodic) rtmp[1] = fmod(r[1],1.0) +1;
+    if (r[2] < 0.0 and periodic) rtmp[2] = fmod(r[2],1.0) +1;
 
     this->threadSafeGenChildren();
     int cIdx = this->getChildIndex(rtmp);

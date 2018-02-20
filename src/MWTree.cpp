@@ -316,6 +316,13 @@ MWNode<D>& MWTree<D>::getNodeOrEndNode(const NodeIndex<D> &idx) {
   * Recursion starts at the appropriate rootNode and decends from this. */
 template<int D>
 const MWNode<D>& MWTree<D>::getNodeOrEndNode(const NodeIndex<D> &idx) const {
+/*
+    uint l[D];
+    int two_n = 1 << n;
+    for (auto i = 0; i < D; i++) {
+        l[i] = idx.getTranslation(i)%two_n;
+    }
+*/
     const MWNode<D> &root = getRootBox().getNode(idx);
     assert(root.isAncestor(idx));
     return *root.retrieveNodeOrEndNode(idx);
@@ -350,6 +357,9 @@ MWNode<D>& MWTree<D>::getNodeOrEndNode(const double *r, int depth) {
     if (r[0] > 1.0 and periodic) rtmp[0] = fmod(r[0],1.0);
     if (r[1] > 1.0 and periodic) rtmp[1] = fmod(r[1],1.0);
     if (r[2] > 1.0 and periodic) rtmp[2] = fmod(r[2],1.0);
+    if (r[0] < 0.0 and periodic) rtmp[0] = fmod(r[0],1.0) +1.0;
+    if (r[1] < 0.0 and periodic) rtmp[1] = fmod(r[1],1.0) +1.0;
+    if (r[2] < 0.0 and periodic) rtmp[2] = fmod(r[2],1.0) +1.0;
 
     MWNode<D> &root = getRootBox().getNode(rtmp);
     return *root.retrieveNodeOrEndNode(rtmp, depth);
