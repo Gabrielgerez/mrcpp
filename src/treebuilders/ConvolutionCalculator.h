@@ -33,8 +33,8 @@ protected:
     static const int nComp = (1 << D);
     static const int nComp2 = (1 << D) * (1 << D);
 
-    MWNodeVector* makeOperBand(const MWNode<D> &gNode);
-    void fillOperBand(MWNodeVector *band, NodeIndex<D> &idx, const int *nbox, int dim);
+    MWNodeVector* makeOperBand(const MWNode<D> &gNode, std::vector<NodeIndex<D> > &idx_band);
+    void fillOperBand(MWNodeVector *band, std::vector<NodeIndex<D> > &idx_band, NodeIndex<D> &idx, const int *nbox, int dim);
 
     void initTimers();
     void clearTimers();
