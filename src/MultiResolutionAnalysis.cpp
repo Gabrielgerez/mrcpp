@@ -44,7 +44,7 @@ MultiResolutionAnalysis<1> MultiResolutionAnalysis<D>::getKernelMRA() const {
         MSG_FATAL("Invalid scaling type");
     }
 
-    int max_l = 0;
+    int max_l = 10;
     for (int i = 0; i < D; i++) {
         if (box.size(i) > max_l) {
             max_l = box.size(i);
