@@ -83,6 +83,12 @@ add_subdirectory(pybind11)
 
 pybind11_add_module(pymrcpp
         pymrcpp.cpp
+        pyGauss.cpp
+        pyFundamentalTypes.cpp
+        pyBases.cpp
+        pyMethods.cpp
+        pyOperators.cpp
+        PyBoundingBox.cpp
     ABGVCalculator.cpp
     ABGVOperator.cpp
     BandWidth.cpp

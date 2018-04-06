@@ -18,6 +18,7 @@
 #include "PyRepresentableFunction.h" // Trampoline Class for Representable Function
 #include "GaussFunc.h"
 #include "FunctionTreeVector.h"
+#include "PyBoundingBox.h"
 
 using namespace mrcpp;
 namespace py = pybind11;
@@ -36,19 +37,17 @@ void pyFundamentalTypes(py::module &m) {
         .def("push_back", py::overload_cast<double, FunctionTree<D> *>(&FunctionTreeVector<D>::push_back))
         .def("push_back", py::overload_cast<FunctionTree<D> *>(&FunctionTreeVector<D>::push_back));
 
-
-    std::stringstream boundBoxName;
-    boundBoxName << "BoundingBox" << D << "D";
-    py::class_<BoundingBox<D>> (m, boundBoxName.str().data())
-        .def(py::init<int, py::array_t<const int>, py::array_t <const int>>())
+    std::stringstream pyBoundBoxName;
+    pyBoundBoxName << "BoundingBox" << D << "D";
+    py::class_<PyBoundingBox<D>> (m, pyBoundBoxName.str().data())
+        .def(py::init<int, py::array_t<int>, py::array_t <int>>())
         .def(py::init<int, int *,  int *>()) //1D cases can be initialized without array type input
-        .def(py::init<bool>()) //For periodic cases
-        .def("getScale", &BoundingBox<D>::getScale);
+        .def("getScale", &PyBoundingBox<D>::getScale);
 
     std::stringstream multResAnaName;
     multResAnaName << "MultiResolutionAnalysis" << D << "D";
     py::class_<MultiResolutionAnalysis<D>> (m, multResAnaName.str().data())
-        .def(py::init<BoundingBox<D>, ScalingBasis, int>())
+        .def(py::init<PyBoundingBox<D>, ScalingBasis, int>())
         .def("getOrder", &MultiResolutionAnalysis<D>::getOrder)
         .def("getMaxDepth", &MultiResolutionAnalysis<D>::getMaxDepth)
         .def("getMaxScale", &MultiResolutionAnalysis<D>::getMaxScale);

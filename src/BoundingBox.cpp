@@ -5,7 +5,7 @@
  *
  */
 
-#include <math.h>
+#include <cmath>
 
 #include "constants.h"
 
@@ -15,28 +15,6 @@
 
 using namespace std;
 using namespace mrcpp;
-
-namespace py = pybind11;
-
-template<int D>
-BoundingBox<D>::BoundingBox(int n, py::array_t<const int> l, py::array_t<const int> nb)
-
-
-    : BoundingBox<D>() {
-
-    auto bufl = l.request();
-    auto bufnb = nb.request();
-
-    if (bufl.ndim != 1 or bufnb.ndim != 1)
-        std::runtime_error("Number of dimensions must be one");
-
-    const int *lPtr = (const int *) bufl.ptr;
-    const int *nbPtr = (const int *) bufnb.ptr;
-
-    NodeIndex<D> cornerIndex(n, lPtr);
-    setNBoxes(nbPtr);
-    setDerivedParameters();
-}
 
 template<int D>
 BoundingBox<D>::BoundingBox(int n, const int *l, const int *nb)
