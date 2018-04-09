@@ -12,7 +12,6 @@
 #include "PoissonOperator.h"
 #include "HelmholtzOperator.h"
 #include "ConvolutionOperator.h"
-
 #include "MultiResolutionAnalysis.h"
 
 using namespace mrcpp;
@@ -22,9 +21,15 @@ namespace py = pybind11;
 template<int D>
 void pyOperators(py::module &m) {
 
+    std::stringstream DerOperatorName;
+    DerOperatorName << "DerivativeOperator" << D << "D";
+    py::class_<DerivativeOperator<D>> deriv(m, DerOperatorName.str().data());
+    deriv
+        .def(py::init<MultiResolutionAnalysis<D>>());
+
     std::stringstream ABGVOperatorName;
     ABGVOperatorName << "ABGVOperator" << D << "D";
-    py::class_<ABGVOperator<D>> (m, ABGVOperatorName.str().data())
+    py::class_<ABGVOperator<D>> (m, ABGVOperatorName.str().data(), deriv)
         .def(py::init< MultiResolutionAnalysis<D> &, double, double >());
 
 
