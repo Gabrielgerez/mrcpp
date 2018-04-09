@@ -22,19 +22,19 @@ Gaussian<D>::Gaussian(double a, double c, py::array_t <double> r, py::array_t <i
     auto bufr = r.request();
     auto bufp = p.request();
 
-    double *rPtr = (double *) bufr.ptr;
-    int *pPtr = (int *) bufp.ptr;
+    auto *rPtr = (double *) bufr.ptr;
+    auto *pPtr = (int *) bufp.ptr;
 
     this->alpha = a;
     this->coef = c;
     this->screen = false;
     for (int d = 0; d < D; d++) {
-        if (rPtr == 0) {
+        if (rPtr == nullptr) {
             this->pos[d] = 0.0;
         } else {
             this->pos[d] = rPtr[d];
         }
-        if (pPtr == 0) {
+        if (pPtr == nullptr) {
             this->power[d] = 0;
         } else {
             this->power[d] = pPtr[d];
