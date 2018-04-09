@@ -8,6 +8,7 @@
 #include "PyBoundingBox.h"
 using namespace std;
 using namespace mrcpp;
+namespace py = pybind11;
 
 template<int D>
 PyBoundingBox<D>::PyBoundingBox(int n, py::array_t<int> l, py::array_t<int> nb)

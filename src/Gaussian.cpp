@@ -10,40 +10,38 @@
 #include"Gaussian.h"
 #include "NodeIndex.h"
 
-#include <pybind11/pybind11.h>
-#include <pybind11/numpy.h>
 
 namespace py = pybind11;
 using namespace std;
 using namespace Eigen;
 using namespace mrcpp;
 
-template<int D>
-Gaussian<D>::Gaussian(double a, double c, py::array_t <double> r, py::array_t <int> p) {
-
-    auto bufr = r.request();
-    auto bufp = p.request();
-
-    double *rPtr = (double *) bufr.ptr;
-    int *pPtr = (int *) bufp.ptr;
-
-    this->alpha = a;
-    this->coef = c;
-    this->screen = false;
-    for (int d = 0; d < D; d++) {
-        if (rPtr == 0) {
-            this->pos[d] = 0.0;
-        } else {
-            this->pos[d] = rPtr[d];
-        }
-        if (pPtr == 0) {
-            this->power[d] = 0;
-        } else {
-            this->power[d] = pPtr[d];
-        }
-    }
-    this->squareNorm = -1.0;
-}
+//template<int D>
+//Gaussian<D>::Gaussian(double a, double c, py::array_t <double> r, py::array_t <int> p) {
+//
+//    auto bufr = r.request();
+//    auto bufp = p.request();
+//
+//    double *rPtr = (double *) bufr.ptr;
+//    int *pPtr = (int *) bufp.ptr;
+//
+//    this->alpha = a;
+//    this->coef = c;
+//    this->screen = false;
+//    for (int d = 0; d < D; d++) {
+//        if (rPtr == 0) {
+//            this->pos[d] = 0.0;
+//        } else {
+//            this->pos[d] = rPtr[d];
+//        }
+//        if (pPtr == 0) {
+//            this->power[d] = 0;
+//        } else {
+//            this->power[d] = pPtr[d];
+//        }
+//    }
+//    this->squareNorm = -1.0;
+//}
 
 
 template<int D>

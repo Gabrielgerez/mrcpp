@@ -11,13 +11,10 @@
 #include "pybind11/include/pybind11/pybind11.h"
 #include "pybind11/include/pybind11/numpy.h"
 
-using namespace mrcpp;
-namespace py = pybind11;
 template<int D>
-class PyBoundingBox : public BoundingBox<D> {
+class PyBoundingBox : public mrcpp::BoundingBox<D> {
 public:
-    using BoundingBox<D>::BoundingBox;
-    PyBoundingBox(int, py::array_t<int>, py::array_t <int>);
-//    virtual ~PyBoundingBox() { }
+    using mrcpp::BoundingBox<D>::BoundingBox;
+    PyBoundingBox(int, pybind11::array_t<int>, pybind11::array_t <int>);
 };
 
