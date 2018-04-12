@@ -55,7 +55,8 @@ void pyMethods(py::module &m) {
     m.def("copy_grid", py::overload_cast<FunctionTree<D> &, FunctionTreeVector<D> &, int>(&copy_grid<D>));
     m.def("clear_grid", &clear_grid<D>);
 
-    m.def("apply", py::overload_cast<double, FunctionTree<D> &, ConvolutionOperator<D> &, FunctionTree<D> &, int>(&apply<D>));
+    m.def("apply", py::overload_cast<double, FunctionTree<D> &, ConvolutionOperator<D> &, FunctionTree<D> &, int>(&apply<D>),
+        py::arg("prec"), py::arg("out"), py::arg("oper"), py::arg("inp"), py::arg("maxIter") = -1);
     m.def("apply", py::overload_cast<FunctionTree<D> &, DerivativeOperator<D> &, FunctionTree<D> &, int>(&apply<D>));
 
     m.def("dot", &dot<D>);
