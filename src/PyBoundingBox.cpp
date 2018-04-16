@@ -20,8 +20,8 @@ PyBoundingBox<D>::PyBoundingBox(int n, py::array_t<int> l, py::array_t<int> nb)
     if (bufl.ndim != 1 or bufnb.ndim != 1)
         std::runtime_error("Number of dimensions must be one");
 
-    const int *lPtr = (const int *) bufl.ptr;
-    const int *nbPtr = (const int *) bufnb.ptr;
+    auto *lPtr = (const int *) bufl.ptr;
+    auto *nbPtr = (const int *) bufnb.ptr;
 
 
     this->cornerIndex = NodeIndex<D>(n, lPtr);
