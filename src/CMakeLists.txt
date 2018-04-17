@@ -1,94 +1,6 @@
 include(DefaultPathsMRCPP)
 
 add_library(mrcpp STATIC
-#    ABGVCalculator.cpp
-#    ABGVOperator.cpp
-#    BandWidth.cpp
-#    BoundingBox.cpp
-#    BoysFunction.cpp
-#    ConvolutionCalculator.cpp
-#    ConvolutionOperator.cpp
-#    CopyAdaptor.cpp
-#    CrossCorrelation.cpp
-#    CrossCorrelationCache.cpp
-#    CrossCorrelationCalculator.cpp
-#    DerivativeCalculator.cpp
-#    FilterCache.cpp
-#    FunctionNode.cpp
-#    FunctionTree.cpp
-#    FunctionTreeVector.cpp
-#    GaussExp.cpp
-#    GaussFunc.cpp
-#    GaussPoly.cpp
-#    GaussQuadrature.cpp
-#    Gaussian.cpp
-#    GenNode.cpp
-#    grid.cpp
-#    HelmholtzKernel.cpp
-#    HelmholtzOperator.cpp
-#    HilbertPath.cpp
-#    InterpolatingBasis.cpp
-#    LegendreBasis.cpp
-#    LegendrePoly.cpp
-#    MWFilter.cpp
-#    MWNode.cpp
-#    MWOperator.cpp
-#    MWTree.cpp
-#    project.cpp
-#    apply.cpp
-#    add.cpp
-#    multiply.cpp
-#    MathUtils.cpp
-#    MultiResolutionAnalysis.cpp
-#    NodeBox.cpp
-#    ObjectCache.cpp
-#    OperatorNode.cpp
-#    OperatorStatistics.cpp
-#    OperatorTree.cpp
-#    PHCalculator.cpp
-#    PHOperator.cpp
-#    Plotter.cpp
-#    PoissonKernel.cpp
-#    PoissonOperator.cpp
-#    Polynomial.cpp
-#    ProjectedNode.cpp
-#    ProjectionCalculator.cpp
-#    QuadratureCache.cpp
-#    RepresentableFunction.cpp
-ScalingBasis.cpp
-#    SerialFunctionTree.cpp
-#    SerialOperatorTree.cpp
-#    SerialTree.cpp
-#    Printer.cpp
-#    Timer.cpp
-#    TreeBuilder.cpp
-#    TreeIterator.cpp
-#    parallel_mpi.cpp
-)
-#
-find_package(PythonLibs)
-include_directories(${PYTHON_INCLUDE_DIRS})
-
-add_subdirectory(pybind11)
-#pybind11_add_module(interpolating pyInterpolatingBasis.cpp InterpolatingBasis.cpp)
-#pybind11_add_module(bounding pyBoundingBox.cpp BoundingBox.cpp)
-#pybind11_add_module(basis
-#        pyScalingBasis.cpp
-#        ScalingBasis.cpp
-#        Polynomial.cpp
-#        RepresentableFunction.cpp
-#        InterpolatingBasis.cpp
-#        QuadratureCache.cpp
-#        GaussQuadrature.cpp)
-
-pybind11_add_module(pymrcpp
-        pymrcpp.cpp
-        pyGauss.cpp
-        pyFundamentalTypes.cpp
-        pyBases.cpp
-        pyMethods.cpp
-        pyOperators.cpp
-        PyBoundingBox.cpp
     ABGVCalculator.cpp
     ABGVOperator.cpp
     BandWidth.cpp
@@ -153,6 +65,11 @@ pybind11_add_module(pymrcpp
     TreeIterator.cpp
     parallel_mpi.cpp
 )
+
+find_package(PythonLibs)
+include_directories(${PYTHON_INCLUDE_DIRS})
+
+
 
 install(TARGETS mrcpp
         ARCHIVE DESTINATION lib
