@@ -26,6 +26,7 @@ Gaussian<D> *GaussFunc<D>::copy() const{
     return gauss;
 }
 
+/*
 template<int D>
 double GaussFunc<D>::evalf( py::array_t <double> rInp) {
 
@@ -54,7 +55,7 @@ double GaussFunc<D>::evalf( py::array_t <double> rInp) {
     }
     return this->coef * p2 * exp(-this->alpha * q2);
 }
-
+*/
 
 template<int D>
 double GaussFunc<D>::evalf(const double *r) const {

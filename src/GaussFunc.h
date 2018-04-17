@@ -26,8 +26,8 @@ namespace mrcpp {
 template<int D>
 class GaussFunc: public Gaussian<D> {
 public:
-    GaussFunc(double alpha, double coef, py::array_t <double> pos,
-              py::array_t<int> pow) : Gaussian<D> (alpha, coef, pos, pow) {}
+    //GaussFunc(double alpha, double coef, py::array_t <double> pos,
+              //py::array_t<int> pow) : Gaussian<D> (alpha, coef, pos, pow) {}
     GaussFunc(double alpha = 0.0, double coef = 1.0, const double pos[D] = 0,
             const int pow[D] = 0) : Gaussian<D>(alpha, coef, pos, pow) {}
     GaussFunc(const GaussFunc<D> &gf) : Gaussian<D>(gf) {}
@@ -37,7 +37,7 @@ public:
     double calcCoulombEnergy(GaussFunc<D> &gf);
     double calcSquareNorm();
 
-    double evalf(py::array_t <double>);
+    //double evalf(py::array_t <double>);
     double evalf(const double *r) const;
     double evalf(double r, int dim) const;
 

@@ -5,8 +5,8 @@
  *          UiT - The Arctic University of Norway
  */
 
-#include <pybind11/pybind11.h>
-#include <pybind11/functional.h>
+#include "pybind11/pybind11.h"
+//#include "pybind11/functional.h"
 
 #include "FunctionTree.h"
 #include "FunctionTreeVector.h"

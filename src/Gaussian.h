@@ -8,21 +8,21 @@
 #include <iostream>
 #include <cmath>
 
-#include "pybind11/include/pybind11/pybind11.h"
-#include "pybind11/include/pybind11/numpy.h"
+//#include "pybind11/include/pybind11/pybind11.h"
+//#include "pybind11/include/pybind11/numpy.h"
 
 #pragma GCC system_header
 #include <Eigen/Core>
 
 #include "RepresentableFunction.h"
 #include "mrcpp_declarations.h"
-namespace py = pybind11;
+//namespace py = pybind11;
 namespace mrcpp {
 
 template<int D>
 class Gaussian: public RepresentableFunction<D> {
 public:
-    Gaussian(double a, double c, py::array_t <double> r, py::array_t <int> p);
+    //Gaussian(double a, double c, py::array_t <double> r, py::array_t <int> p);
     Gaussian(double a, double c, const double r[D], const int p[D]);
     virtual Gaussian<D> *copy() const = 0;
     virtual ~Gaussian();

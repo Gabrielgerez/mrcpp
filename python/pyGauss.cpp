@@ -4,8 +4,8 @@
  *          Hylleraas Centre for Quantum Molecular Sciences \n
  *          UiT - The Arctic University of Norway
  */
-#include <pybind11/pybind11.h>
-#include <pybind11/numpy.h>
+//#include "pybind11/pybind11.h"
+//#include "pybind11/numpy.h"
 
 #include "Gaussian.h"
 #include "RepresentableFunction.h"
