@@ -272,7 +272,7 @@ void ConvolutionCalculator<D>::applyOperComp(OperatorState<D> &os) {
 }
 
 /** Apply a single operator component (term) to a single f-node. Whether the
-operator actualy is applied is determined by a screening threshold. */
+operator actually is applied is determined by a screening threshold. */
 template<int D>
 void ConvolutionCalculator<D>::applyOperator(OperatorState<D> &os) {
     const OperatorTree &oTree = *os.oTree;
@@ -311,8 +311,8 @@ void ConvolutionCalculator<D>::applyOperator(OperatorState<D> &os) {
     }
 }
 
-/** Perorm the required linear algebra operations in order to apply an
-operator component to a f-node in a n-dimensional tesor space. */
+/** Preform the required linear algebra operations in order to apply an
+operator component to a f-node in a n-dimensional tensor space. */
 template<int D>
 void ConvolutionCalculator<D>::tensorApplyOperComp(OperatorState<D> &os) {
     double **aux = os.getAuxData();
