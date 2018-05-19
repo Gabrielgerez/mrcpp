@@ -24,14 +24,14 @@ BoundingBox<D>::BoundingBox(int n, const int *l, const int *nb)
 
 template<int D>
 BoundingBox<D>::BoundingBox(const NodeIndex<D> &idx, const int *nb)
-        : cornerIndex(idx) {
+        : periodic(false), cornerIndex(idx) {
     setNBoxes(nb);
     setDerivedParameters();
 }
 
 template<int D>
 BoundingBox<D>::BoundingBox(const BoundingBox<D> &box)
-        : cornerIndex(box.cornerIndex) {
+        : periodic(box.periodic), cornerIndex(box.cornerIndex) {
     setNBoxes(box.nBoxes);
     setDerivedParameters();
 }
@@ -46,6 +46,7 @@ BoundingBox<D>::BoundingBox(bool pbc)
 template<int D>
 BoundingBox<D> &BoundingBox<D>::operator=(const BoundingBox<D> &box) {
     if (&box != this) {
+        this->periodic = box.periodic;
         this->cornerIndex = box.cornerIndex;
         setNBoxes(box.nBoxes);
         setDerivedParameters();
