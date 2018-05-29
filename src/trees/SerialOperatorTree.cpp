@@ -30,7 +30,7 @@ SerialOperatorTree::SerialOperatorTree(OperatorTree *tree)
 
     this->sizeNodeCoeff = 4*this->tree_p->getKp1_d();
 
-    this->maxNodesPerChunk = 64;
+    this->maxNodesPerChunk = 1024;
     int sizePerChunk = this->maxNodesPerChunk*this->sizeNodeCoeff;
    
     this->lastNode = (OperatorNode*) this->sNodes;//position of last allocated node
