@@ -176,6 +176,25 @@ double FunctionTree<D>::evalf(const std::array<double, D> &r) {
  * squared, no grid refinement.
  *
  */
+
+template<int D>
+double FunctionTree<D>::evalf(double x) {
+    double r[1] = {x};
+    return this->evalf(r);
+}
+
+template<int D>
+double FunctionTree<D>::evalf(double x, double y) {
+    double r[2] = {x, y};
+    return this->evalf(r);
+}
+
+template<int D>
+double FunctionTree<D>::evalf(double x, double y, double z) {
+    double r[3] = {x, y, z};
+    return this->evalf(r);
+}
+
 template<int D>
 void FunctionTree<D>::square() {
     if (this->getNGenNodes() != 0) MSG_FATAL("GenNodes not cleared");
