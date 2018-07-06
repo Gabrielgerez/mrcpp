@@ -1,5 +1,5 @@
 import numpy as np
-import pymrcpp as mr
+import vampyr as vp
 
 from math import isclose
 
@@ -11,11 +11,11 @@ prec = 1e-5
 corner = -1
 boxes = 2
 
-world = mr.BoundingBox1D(min_scale, corner, boxes)
+world = vp.BoundingBox1D(min_scale, corner, boxes)
 
-basis = mr.InterpolatingBasis(order)
+basis = vp.InterpolatingBasis(order)
 
-MRA = mr.MultiResolutionAnalysis1D(world, basis, max_depth)
+MRA = vp.MultiResolutionAnalysis1D(world, basis, max_depth)
 
 
 def phi(x):
@@ -25,11 +25,11 @@ def phi(x):
     return alpha*np.exp(-beta*x**2)
 
 
-phi_tree = mr.FunctionTree1D(MRA)
-add_tree = mr.FunctionTree1D(MRA)
-mult_tree = mr.FunctionTree1D(MRA)
+phi_tree = vp.FunctionTree1D(MRA)
+add_tree = vp.FunctionTree1D(MRA)
+mult_tree = vp.FunctionTree1D(MRA)
 
-mr.project(prec, phi_tree, phi)
+vp.project(prec, phi_tree, phi)
 
 
 def test_IsIntWorking():
@@ -49,10 +49,10 @@ def test_MRAGetOrder():
 
 
 def test_add():
-    mr.add(prec/10, add_tree, 1.0, phi_tree, -1, phi_tree)
+    vp.add(prec/10, add_tree, 1.0, phi_tree, -1, phi_tree)
     assert isclose(add_tree.evalf(0), 0.0, abs_tol=prec*10)
 
 
 def test_multiply():
-    mr.multiply(prec, mult_tree, 1, phi_tree, phi_tree)
+    vp.multiply(prec, mult_tree, 1, phi_tree, phi_tree)
     assert isclose(mult_tree.evalf(0), phi(0)**2, rel_tol=prec)
