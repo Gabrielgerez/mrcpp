@@ -1,5 +1,5 @@
 import numpy as np
-import vampyr as vp
+import vampyr1d as vp
 
 from math import isclose
 
@@ -24,13 +24,23 @@ def phi(x):
 
     return alpha*np.exp(-beta*x**2)
 
+def d_phi(x):
+    beta = 100
+    alpha = (beta/np.pi)**(1/2)
+
+    return -2.0*alpha*beta*x*np.exp(-beta*x**2)
+
+
 
 phi_tree = vp.FunctionTree1D(MRA)
+d_phi_tree = vp.FunctionTree1D(MRA)
+
 add_tree = vp.FunctionTree1D(MRA)
 mult_tree = vp.FunctionTree1D(MRA)
+diff_tree = vp.FunctionTree1D(MRA)
 
 vp.project(prec, phi_tree, phi)
-
+vp.project(prec, d_phi_tree, d_phi)
 
 def test_IsIntWorking():
     assert isclose(1.0, phi_tree.integrate(), rel_tol=prec)
@@ -56,3 +66,8 @@ def test_add():
 def test_multiply():
     vp.multiply(prec, mult_tree, 1, phi_tree, phi_tree)
     assert isclose(mult_tree.evalf(0), phi(0)**2, rel_tol=prec)
+
+def test_differentiation():
+    D = vp.ABGVOperator(MRA, 0.0, 0.0)
+    vp.apply(diff_tree, D, phi_tree, 0)
+    assert isclose(diff_tree.evalf(0.2), d_phi_tree.evalf(0.2), rel_tol=prec)

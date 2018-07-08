@@ -1,22 +1,19 @@
 find_package(PythonLibs)
 
-pybind11_add_module(vampyr SHARED
-    vampyr.cpp
+pybind11_add_module(vampyr1d SHARED
+    vampyr1d.cpp
     PyBoundingBox.cpp
-    project.cpp
-    operators.cpp
-    methods.cpp
     bases.cpp
-    fundamentalTypes.cpp
+    project.cpp
 )
 
-target_include_directories(vampyr PRIVATE
+target_include_directories(vampyr1d PRIVATE
     ${PYTHON_INCLUDE_DIRS}
     ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_SOURCE_DIR}/include
     ${CMAKE_SOURCE_DIR}/external/pybind11/include/
     )
 
-target_link_libraries(vampyr PRIVATE
+target_link_libraries(vampyr1d PRIVATE
     mrcpp
     )
