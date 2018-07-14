@@ -11,11 +11,11 @@ prec = 1e-3
 corner = np.array([-1, -1, -1])
 boxes = np.array([2, 2, 2])
 
-world = vp.BoundingBox3D(min_scale, corner, boxes)
+world = vp.BoundingBox(min_scale, corner, boxes)
 
 basis = vp.InterpolatingBasis(order)
 
-MRA = vp.MultiResolutionAnalysis3D(world, basis, max_depth)
+MRA = vp.MultiResolutionAnalysis(world, basis, max_depth)
 
 
 def phi_exact(x, y, z):
@@ -48,13 +48,13 @@ H = vp.HelmholtzOperator(MRA, 10.0, prec)
 P = vp.PoissonOperator(MRA, prec)
 
 
-phi_tree = vp.FunctionTree3D(MRA)
-phi_tree_pois = vp.FunctionTree3D(MRA)
-v_tree = vp.FunctionTree3D(MRA)
-v_tree_pois = vp.FunctionTree3D(MRA)
+phi_tree = vp.FunctionTree(MRA)
+phi_tree_pois = vp.FunctionTree(MRA)
+v_tree = vp.FunctionTree(MRA)
+v_tree_pois = vp.FunctionTree(MRA)
 
-add_tree = vp.FunctionTree3D(MRA)
-mult_tree = vp.FunctionTree3D(MRA)
+add_tree = vp.FunctionTree(MRA)
+mult_tree = vp.FunctionTree(MRA)
 
 
 vp.project(prec, v_tree, v_helm)

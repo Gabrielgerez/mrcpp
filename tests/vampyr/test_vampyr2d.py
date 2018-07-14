@@ -11,11 +11,11 @@ prec = 1e-5
 corner = np.array([-1, -1])
 boxes = np.array([2, 2])
 
-world = vp.BoundingBox2D(min_scale, corner, boxes)
+world = vp.BoundingBox(min_scale, corner, boxes)
 
 basis = vp.InterpolatingBasis(order)
 
-MRA = vp.MultiResolutionAnalysis2D(world, basis, max_depth)
+MRA = vp.MultiResolutionAnalysis(world, basis, max_depth)
 
 
 def phi(x, y):
@@ -25,9 +25,9 @@ def phi(x, y):
     return alpha*np.exp(-beta*(x**2 + y**2))
 
 
-phi_tree = vp.FunctionTree2D(MRA)
-add_tree = vp.FunctionTree2D(MRA)
-mult_tree = vp.FunctionTree2D(MRA)
+phi_tree = vp.FunctionTree(MRA)
+add_tree = vp.FunctionTree(MRA)
+mult_tree = vp.FunctionTree(MRA)
 
 
 vp.project(prec, phi_tree, phi)

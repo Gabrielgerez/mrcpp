@@ -11,11 +11,11 @@ prec = 1e-5
 corner = -1
 boxes = 2
 
-world = vp.BoundingBox1D(min_scale, corner, boxes)
+world = vp.BoundingBox(min_scale, corner, boxes)
 
 basis = vp.InterpolatingBasis(order)
 
-MRA = vp.MultiResolutionAnalysis1D(world, basis, max_depth)
+MRA = vp.MultiResolutionAnalysis(world, basis, max_depth)
 
 
 def phi(x):
@@ -32,12 +32,12 @@ def d_phi(x):
 
 
 
-phi_tree = vp.FunctionTree1D(MRA)
-d_phi_tree = vp.FunctionTree1D(MRA)
+phi_tree = vp.FunctionTree(MRA)
+d_phi_tree = vp.FunctionTree(MRA)
 
-add_tree = vp.FunctionTree1D(MRA)
-mult_tree = vp.FunctionTree1D(MRA)
-diff_tree = vp.FunctionTree1D(MRA)
+add_tree = vp.FunctionTree(MRA)
+mult_tree = vp.FunctionTree(MRA)
+diff_tree = vp.FunctionTree(MRA)
 
 vp.project(prec, phi_tree, phi)
 vp.project(prec, d_phi_tree, d_phi)
