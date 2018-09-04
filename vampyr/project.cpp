@@ -17,6 +17,8 @@
 namespace py = pybind11;
 using namespace mrcpp;
 
+namespace vampyr {
+
 void project3D(double prec,
                FunctionTree<3> &out,
                std::function<double (double x, double y, double z)> func,
@@ -40,3 +42,4 @@ void project1D(double prec,
     PyAnalyticFunction1D inp(std::move(func));
     project(prec, out, inp, maxIter);
 }
+} // namespace vampyr

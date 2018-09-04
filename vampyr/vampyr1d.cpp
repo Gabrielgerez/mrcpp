@@ -34,6 +34,8 @@
 using namespace mrcpp;
 namespace py = pybind11;
 
+namespace vampyr {
+
 void bases(py::module &);
 
 PYBIND11_MODULE(vampyr1d, m) {
@@ -57,12 +59,12 @@ PYBIND11_MODULE(vampyr1d, m) {
         .def("getOrder", &MultiResolutionAnalysis<1>::getOrder)
         .def("getMaxDepth", &MultiResolutionAnalysis<1>::getMaxDepth)
         .def("getMaxScale", &MultiResolutionAnalysis<1>::getMaxScale);
-    
+
     py::class_<MWTree<1>> mwtree(m, "MWTree");
     mwtree
         .def(py::init<MultiResolutionAnalysis<1>>())
         .def("getSquareNorm", &MWTree<1>::getSquareNorm);
-    
+
     py::class_<FunctionTree<1>> functree(m, "FunctionTree", mwtree);
     functree
         .def(py::init<MultiResolutionAnalysis<1>>())
@@ -70,25 +72,25 @@ PYBIND11_MODULE(vampyr1d, m) {
         .def("clear", &FunctionTree<1>::clear)
         .def("normalize", &FunctionTree<1>::normalize)
         .def("evalf", py::overload_cast<double>(&FunctionTree<1>::evalf));
-    
+
     m.def("apply", py::overload_cast<double, FunctionTree<1>&,
         ConvolutionOperator<1>&, FunctionTree<1>&, int>(&apply<1>),
         py::arg("precision"), py::arg("output_tree"), py::arg("ConvolutionOperator"), py::arg("input_tree"),
         py::arg("maxIter") = -1);
-    
+
     m.def("apply", py::overload_cast<FunctionTree<1>&, DerivativeOperator<1>&,
         FunctionTree<1>&, int>(&apply<1>));
-    
+
     m.def("add", py::overload_cast<double, FunctionTree<1>&, double,
         FunctionTree<1> &, double, FunctionTree<1> &, int>(&add<1>),
         py::arg("precision"), py::arg("output_tree"), py::arg("a"),  py::arg("tree_a"),
         py::arg("b"), py::arg("tree_b"), py::arg("maxIter") = -1,
         "Adds to function trees");
-    
+
     m.def("project", py::overload_cast<double, FunctionTree<1>&,
         RepresentableFunction<1> &, int>(&project<1>),
         py::arg("precision"), py::arg("output_tree"), py::arg("input_tree"), py::arg("maxIter")= -1);
-    
+
     m.def("multiply", py::overload_cast<double, FunctionTree<1>&, double,
         FunctionTree<1> &, FunctionTree<1> &, int >(&multiply<1>),
         py::arg("precision"), py::arg("output_tree"), py::arg("c"), py::arg("tree_a"),
@@ -101,8 +103,9 @@ PYBIND11_MODULE(vampyr1d, m) {
     py::class_<DerivativeOperator<1>> deriv(m, "Derivative Operator");
     deriv
         .def(py::init<MultiResolutionAnalysis<1>>());
-    
+
     py::class_<ABGVOperator<1>> (m, "ABGVOperator", deriv)
         .def(py::init< MultiResolutionAnalysis<1> &, double, double >(),
             "Derivative Operator: The ABGVOperator for differentiation");
 }
+} // namespace vampyr

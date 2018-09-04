@@ -34,6 +34,8 @@
 using namespace mrcpp;
 namespace py = pybind11;
 
+namespace vampyr {
+
 void bases(py::module &);
 
 PYBIND11_MODULE(vampyr2d, m) {
@@ -119,3 +121,4 @@ PYBIND11_MODULE(vampyr2d, m) {
         .def(py::init< MultiResolutionAnalysis<2> &, double, double >(),
             "Derivative Operator: The ABGVOperator for differentiation");
 }
+} // namespace vampyr
