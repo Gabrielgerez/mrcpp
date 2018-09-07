@@ -11,7 +11,6 @@ add_subdirectory(core)
 add_subdirectory(functions)
 add_subdirectory(operators)
 add_subdirectory(trees)
-add_subdirectory(vampyr)
 
 target_link_libraries(mrcpp-tests
     mrcpp
