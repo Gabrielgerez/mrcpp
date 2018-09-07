@@ -51,12 +51,13 @@ PYBIND11_MODULE(vampyr3d, m) {
 
     // FunctonTreeVector related start
     py::class_<FunctionTreeVector<3>> (m, "FunctionTreeVector")
-        .def(py::init<>(), "Add FunctionTrees and coefficients to FunctionTreeVectors");
+        .def(py::init<>())
+        .def("size", &FunctionTreeVector<3>::size);
 
     m.def("push_back", &py_push_back<3>);
 
     m.def("get_coef", &get_coef<3>);
-    m.def("get_func", py::overload_cast<FunctionTreeVector<3> &, int>(&get_func<3>)); 
+    m.def("get_func", py::overload_cast<FunctionTreeVector<3> &, int>(&get_func<3>));
     // FunctonTreeVector related end
     m.def("project", py::overload_cast<double, FunctionTree<3>&,
         std::function<double (double, double, double)>, int>(&project3D),
