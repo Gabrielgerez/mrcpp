@@ -20,6 +20,9 @@ public:
         if (not this->outOfBounds(r)) val = this->func(r[0], r[1], r[2]);
         return val;
     }
+    virtual double evalf(const std::array<double, 3> &r) const {
+        return this->evalf(r.data());
+    }
 protected:
     std::function<double (double x, double y, double z)> func;
 };
@@ -34,6 +37,9 @@ public:
         if (not this->outOfBounds(r)) val = this->func(r[0], r[1]);
         return val;
     }
+    virtual double evalf(const std::array<double, 2> &r) const {
+        return this->evalf(r.data());
+    }
 protected:
     std::function<double (double x, double y)> func;
 };
@@ -47,6 +53,9 @@ public:
         double val = 0.0;
         if (not this->outOfBounds(r)) val = this->func(r[0]);
         return val;
+    }
+    virtual double evalf(const std::array<double, 1> &r) const {
+        return this->evalf(r.data());
     }
 protected:
     std::function<double (double x)> func;

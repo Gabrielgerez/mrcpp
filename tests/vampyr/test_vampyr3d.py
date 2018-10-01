@@ -95,12 +95,12 @@ def test_add():
     assert isclose(add_tree.evalf(0, 0, 0), 0.0, abs_tol=prec*10)
 
 
-def test_add_vec():
-    sum_vec = vp.FunctionTreeVector()
-    vp.push_back(sum_vec, 1.0, phi_tree)
-    vp.push_back(sum_vec, -1.0, phi_tree)
-    vp.add(prec/10, add_vec_tree, sum_vec)
-    assert isclose(add_vec_tree.evalf(0.0, 0.0, 0.0), 0.0, abs_tol=prec*10)
+# def test_add_vec():
+#     sum_vec = vp.FunctionTreeVector()
+#     vp.push_back(sum_vec, 1.0, phi_tree)
+#     vp.push_back(sum_vec, -1.0, phi_tree)
+#     vp.add(prec/10, add_vec_tree, sum_vec)
+#     assert isclose(add_vec_tree.evalf(0.0, 0.0, 0.0), 0.0, abs_tol=prec*10)
 
 
 def test_multiply():
@@ -110,10 +110,10 @@ def test_multiply():
                    phi_exact(0, 0, 0)**2, rel_tol=prec)
 
 
-def test_multiply_vec():
-    multiply_vec = vp.FunctionTreeVector()
-    vp.push_back(multiply_vec, 1.0, phi_tree)
-    vp.push_back(multiply_vec, 1.0, phi_tree)
-    vp.multiply(prec/10, mult_vec_tree, multiply_vec)
-    assert isclose(mult_vec_tree.evalf(0, 0, 0),
-                   phi_exact(0, 0, 0)**2, rel_tol=prec)
+# def test_multiply_vec():
+#     multiply_vec = vp.FunctionTreeVector()
+#     vp.push_back(multiply_vec, 1.0, phi_tree)
+#     vp.push_back(multiply_vec, 1.0, phi_tree)
+#     vp.multiply(prec/10, mult_vec_tree, multiply_vec)
+#     assert isclose(mult_vec_tree.evalf(0, 0, 0),
+#                    phi_exact(0, 0, 0)**2, rel_tol=prec)

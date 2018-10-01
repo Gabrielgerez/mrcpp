@@ -5,11 +5,11 @@
  *          UiT - The Arctic University of Norway
  */
 
-#include <tuple>
 #include "pybind11/pybind11.h"
 #include "pybind11/numpy.h"
 #include "pybind11/eigen.h"
 #include "pybind11/functional.h"
+#include "pybind11/stl.h"
 
 #include "trees/BoundingBox.h"
 #include "trees/MultiResolutionAnalysis.h"
@@ -19,6 +19,7 @@
 
 #include "PyBoundingBox.h"
 #include "PyAnalyticFunction.h"
+#include "PyRepresentableFunction.h"
 #include "project.h"
 #include "py_push_back.h"
 
@@ -32,7 +33,11 @@
 #include "treebuilders/multiply.h"
 #include "treebuilders/apply.h"
 #include "treebuilders/project.h"
+#include "treebuilders/grid.h"
 
+#include "functions/GaussFunc.h"
+#include "functions/RepresentableFunction.h"
+#include "functions/Gaussian.h"
 
 using namespace mrcpp;
 namespace py = pybind11;
@@ -48,21 +53,33 @@ PYBIND11_MODULE(vampyr3d, m) {
               "availible through a python interface";
 
     bases(m);
-
+    const auto D = 3;
     // FunctonTreeVector related start
-    py::class_<FunctionTreeVector<3>> (m, "FunctionTreeVector")
-        .def(py::init<>())
-        .def("size", &FunctionTreeVector<3>::size);
+    // py::class_<FunctionTreeVector<3>> (m, "FunctionTreeVector")
+        // .def(py::init<>())
+        // .def("size", &FunctionTreeVector<3>::size);
+//
+    // m.def("push_back", &py_push_back<3>);
 
-    m.def("push_back", &py_push_back<3>);
-
-    m.def("get_coef", &get_coef<3>);
-    m.def("get_func", py::overload_cast<FunctionTreeVector<3> &, int>(&get_func<3>));
+    // m.def("get_coef", &get_coef<3>);
+    // m.def("get_func", py::overload_cast<FunctionTreeVector<3> &, int>(&get_func<3>));
     // FunctonTreeVector related end
     m.def("project", py::overload_cast<double, FunctionTree<3>&,
         std::function<double (double, double, double)>, int>(&project3D),
         py::arg("precision"), py::arg("output_tree"), py::arg("function"), py::arg("maxIter")= -1,
         "Projects an analytic function onto a FunctionTree");
+
+    m.def("project_gauss", py::overload_cast<double, FunctionTree<3> &, RepresentableFunction<3> &, int>(&mrcpp::project<3>),
+        py::arg("precision"), py::arg("output_tree"), py::arg("GaussFunc"), py::arg("maxIter") = -1);
+
+    py::class_<RepresentableFunction<D>, PyRepresentableFunction<D>> repfunc(m, "RepresentableFunction");
+    repfunc
+        .def(py::init<>());
+
+    py::class_<Gaussian<D>> gaussian(m, "Gaussian", repfunc);
+
+    py::class_<GaussFunc<3>> (m, "GaussFunc", gaussian)
+        .def(py::init<double, double, std::array<double, 3> &, std::array<int, 3> &>());
 
     py::class_<PyBoundingBox<3>> (m, "BoundingBox")
         .def(py::init<int, py::array_t<int>, py::array_t <int>>(),
@@ -155,5 +172,22 @@ PYBIND11_MODULE(vampyr3d, m) {
         .def(py::init<MultiResolutionAnalysis<3> &, double, double>(),
             py::arg("MRA"), py::arg("mu"), py::arg("precision"),
             "ConvolutionOperator: HelmholtzOperator exp(-mu*r)/|r-r'|");
+
+    m.def("build_grid", py::overload_cast<FunctionTree<D> &,
+        const RepresentableFunction<D> &, int>(&build_grid<D>),
+        py::arg("out"), py::arg("inp"), py::arg("maxIter") = -1);
+
+     m.def("build_grid", py::overload_cast<FunctionTree<D> &,
+         FunctionTree<D> &, int>(&build_grid<D>),
+         py::arg("out"), py::arg("inp"), py::arg("maxIter") = -1);
+
+    m.def("copy_grid", py::overload_cast<FunctionTree<D> &, FunctionTree<D> &>(&copy_grid<D>));
+    m.def("clear_grid", py::overload_cast<FunctionTree<D> &>(&clear_grid<D>));
+    m.def("refine_grid", py::overload_cast<FunctionTree<D> &, int>(&refine_grid<D>),
+        py::arg("out"), py::arg("scales"));
+    m.def("refine_grid", py::overload_cast<FunctionTree<D> &, double>(&refine_grid<D>),
+        py::arg("out"), py::arg("prec"));
+    m.def("refine_grid", py::overload_cast<FunctionTree<D> &, FunctionTree<D> &>(&refine_grid<D>),
+        py::arg("out"), py::arg("inp"));
 }
 } // namespace vampyr
